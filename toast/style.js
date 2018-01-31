@@ -31,19 +31,26 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
   },
-  content: {
-    flexDirection: 'row',
-    backgroundColor: 'rgba(3, 3, 3, 0.8)',
-    //backgroundColor: '#666',
-    borderRadius: 4,
-    paddingTop: 8,
-    paddingBottom: 8,
+  opacityBox: {
     position: 'absolute',
+    // backgroundColor: '#999',
+    // opacity: 0.7,
+    borderRadius: 4,
+    width: '100%',
+    height: '100%',
+  },
+  content: {
+    position: 'absolute',
+    flexDirection: 'row',
+    justifyContent: 'center',
+    alignItems: 'center',
   },
   text: {
-    paddingLeft: 8,
+    paddingLeft: 10,
     paddingRight: 10,
-    color: '#fff',
+    paddingTop: 8,
+    paddingBottom: 8,
+    color: '#000',
   },
   icon: {
     marginLeft: 8

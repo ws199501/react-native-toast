@@ -5,8 +5,11 @@
  * 1. text,
  * 2. position: one of 'center', 'top', 'bottom' 默认 center
  * 3. type: one of  'success' , 'error' , 'warning' 默认 success
- * 4. duration: 动画时间 默认 400 单位毫秒
+ * 4. duration: 动画持续时间 默认 400 单位毫秒
  * 5. keeping: 提示存在时间 默认 2000 单位毫秒
+ * 6. backgroundColor: '#666', 背景颜色，
+ * 7. opacity: 0.7, 背景透明度
+ * 8. fontColor: '#fff', 自体颜色
  */
 
 import React, { Component } from 'react'
@@ -22,7 +25,6 @@ import {
   TouchableOpacity
 } from 'react-native'
 import styles from './style'
-import Icon from 'react-native-vector-icons/Feather';
 
 const Window = {
   width: Dimensions.get('window').width,
@@ -90,17 +92,15 @@ export default class Toast extends Component {
   render() {
     const { text, type, position, opacity, visible } = this.state
     // 选择图标
-    let name = ''
-    let iconColor = ''
+    let icon = ''
     let contentStyle
     if(type == 'error') {
-      name = 'x-circle'
-      iconColor= '#ff0000'
+      icon= require('./close-circle.png')
     }else if (type == 'warning') {
-      name = 'alert-circle'
+      icon= require('./alert-circle.png')
       iconColor= '#eeff33'
     }else if(type == 'success') {
-      name = 'check-circle'
+      icon= require('./check-circle.png')
       iconColor= '#009900'
     }
     if(this.props.position === 'bottom') {
@@ -120,8 +120,9 @@ export default class Toast extends Component {
       >
         <Animated.View style={[styles.box, {opacity: opacity}]}>
           <View style={ contentStyle }>
-            {type ? <Icon style={ styles.icon } name={name} size={18} color={iconColor} /> : null}
-            <Text style={ styles.text }>{text}</Text>
+            <View style={ [styles.opacityBox,{backgroundColor: this.props.backgroundColor, opacity: this.props.opacity}] }/>
+            <Image source={icon} style={styles.icon}/>
+            <Text style={ [styles.text,{color: this.props.fontColor}] }>{text}</Text>
           </View>
         </Animated.View>
       </Modal>
@@ -134,6 +135,9 @@ Toast.propTypes = {
   keeping: PropTypes.number,
   duration: PropTypes.number,
   type: PropTypes.oneOf(['success', 'error','warning']),
+  backgroundColor: PropTypes.string,
+  opacity: PropTypes.number,
+  fontColor: PropTypes.string,
 }
 
 Toast.defaultProps = {
@@ -141,4 +145,7 @@ Toast.defaultProps = {
   position: 'center',
   type: 'success',
   duration: 400,
+  backgroundColor: '#666',
+  opacity: 0.7,
+  fontColor: '#fff',
 }
